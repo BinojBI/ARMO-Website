@@ -1,8 +1,9 @@
 "use client";
 import React, { useRef, useState } from "react";
-import { Canvas, useFrame } from "@react-three/fiber";
+import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import { Text, Float, ContactShadows, Center } from "@react-three/drei";
 import * as THREE from "three";
+import { motion, useScroll, useTransform } from "framer-motion";
 
 // Define props for our Nav Item
 interface NavItemProps {
@@ -34,7 +35,7 @@ function NavItem({ label, position, href }: NavItemProps) {
       <Text
         ref={mesh}
         position={position}
-        fontSize={0.4}
+        fontSize={0.3}
         color={hovered ? "#387498" : "white"}
         onPointerOver={() => (
           (document.body.style.cursor = "pointer"), setHover(true)
@@ -52,11 +53,31 @@ function NavItem({ label, position, href }: NavItemProps) {
   );
 }
 
-export default function Navbar3D() {
+function ResponsiveCenter({ children }: { children: React.ReactNode }) {
+  const { viewport, size } = useThree();
+
+  // Logic: If screen width (size.width) is less than 768,
+  // move the group to the right (x = 1.5). Otherwise, keep it at 0.
+  // Note: 1.5 is in 3D units, not pixels.
+  const isMobile = size.width < 768;
+  const positionX = isMobile ? 0.5 : 0;
+
   return (
-    // IMPORTANT: Ensure height is defined (h-40) and pointer-events-none
-    // is on the container so you can still click things behind the 3D space.
-    <div className="fixed top-0 left-0 w-full h-40 z-[100] pointer-events-none">
+    <Center top position={[positionX, 0, 0]}>
+      {children}
+    </Center>
+  );
+}
+
+export default function Navbar3D() {
+  const { scrollY } = useScroll();
+  const opacity = useTransform(scrollY, [0, 200], [1, 0]);
+  const y = useTransform(scrollY, [0, 200], [0, -20]);
+  return (
+    <motion.div
+      style={{ opacity, y }}
+      className="fixed top-0 left-0 w-full h-40 z-[100] pointer-events-none"
+    >
       <Canvas
         shadows
         camera={{ position: [0, 0, 5], fov: 35 }}
@@ -66,16 +87,16 @@ export default function Navbar3D() {
         <pointLight position={[10, 10, 10]} intensity={1} />
         <spotLight position={[-10, 10, 10]} angle={0.15} penumbra={1} />
 
-        <Center top position={[0, 0, 0]}>
-          <NavItem label="GAMES" position={[-3, 0, 0]} href="/games" />
-          <NavItem label="BLOG" position={[-1, 0, 0]} href="/blog" />
-          <NavItem label="STUDIO" position={[1, 0, 0]} href="/studio" />
-          <NavItem label="JOBS" position={[3, 0, 0]} href="/jobs" />
-        </Center>
+        <ResponsiveCenter>
+          <NavItem label="ARMO" position={[-3, 0, 0]} href="/" />
+          <NavItem label="SERVICES" position={[-1, 0, 0]} href="/services" />
+          <NavItem label="ABOUT US" position={[1, 0, 0]} href="/about" />
+          <NavItem label="CAREERS" position={[3, 0, 0]} href="/careers" />
+        </ResponsiveCenter>
 
         {/* This helps visibility by adding a soft floor shadow */}
         <ContactShadows opacity={0.4} scale={10} blur={2} far={4.5} />
       </Canvas>
-    </div>
+    </motion.div>
   );
 }
