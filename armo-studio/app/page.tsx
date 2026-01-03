@@ -4,6 +4,7 @@ import Navbar3D from "./components/navbar";
 import HeroBackground3D from "./components/HeroBackground3D";
 import StatsSection from "./components/StatsSection";
 import ServicesSection from "./components/ServicesSection";
+import Footer from "./components/Footer";
 import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
 
@@ -27,7 +28,7 @@ export default function Home() {
       <Navbar3D />
 
       {/* Hero Section */}
-      <section className="relative w-full h-[80vh] flex items-center justify-start px-8 lg:px-20">
+      <section className="relative w-full h-screen flex items-center justify-start px-8 lg:px-20">
         <div className="absolute inset-0 z-0">
           <HeroBackground3D scrollProgress={scrollProgress} />
         </div>
@@ -44,8 +45,8 @@ export default function Home() {
             <span className="text-[#93DCFF]"> STUDIO</span>
           </h1>
           <p className="mt-4 text-lg md:text-xl text-gray-400 max-w-lg font-mono">
-            Crafting immersive experiences and pushing the boundaries of
-            interactive entertainment.
+            Develop your next generation immersive experiences and pushing the
+            boundaries of interactive entertainment.
           </p>
           <motion.button
             whileHover={{ scale: 1.05, filter: "brightness(1.1)" }}
@@ -132,6 +133,7 @@ export default function Home() {
           </motion.div>
         </div>
       </section>
+      <Footer />
     </main>
   );
 }
