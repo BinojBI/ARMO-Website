@@ -1,5 +1,6 @@
 "use client";
 import Image from "next/image";
+import localFont from "next/font/local";
 import Navbar3D from "./components/navbar";
 import HeroBackground3D from "./components/HeroBackground3D";
 import StatsSection from "./components/StatsSection";
@@ -7,6 +8,17 @@ import ServicesSection from "./components/ServicesSection";
 import Footer from "./components/Footer";
 import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
+import BonfireVFX from "./components/BonfireVFX";
+
+const LuckiestGuyRegular = localFont({
+  src: "../public/fonts/LuckiestGuy-Regular.ttf",
+  variable: "--font-custom",
+});
+
+const BubblegumSansRegular = localFont({
+  src: "../public/fonts/BubblegumSans-Regular.ttf",
+  variable: "--font-custom",
+});
 
 export default function Home() {
   const [scrollProgress, setScrollProgress] = useState(0);
@@ -28,9 +40,12 @@ export default function Home() {
       <Navbar3D />
 
       {/* Hero Section */}
-      <section className="relative w-full h-screen flex items-center justify-start px-8 lg:px-20">
+      <section className="relative w-full h-auto flex items-center justify-center px-8 lg:px-20 py-50 overflow-hidden">
         <div className="absolute inset-0 z-0">
-          <HeroBackground3D scrollProgress={scrollProgress} />
+          {/* <HeroBackground3D scrollProgress={scrollProgress} /> */}
+          <div className="absolute inset-0 z-20">
+            <BonfireVFX />
+          </div>
         </div>
 
         {/* Overlay Content: "WE MAKE GAMES" */}
@@ -38,13 +53,17 @@ export default function Home() {
           initial={{ opacity: 0, x: -50 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.8, delay: 0.5 }}
-          className="relative z-10 text-left" // Ensure text is above 3D background
+          className="relative z-10 text-center pt-20" // Ensure text is above 3D background
         >
-          <h1 className="text-6xl md:text-8xl lg:text-[5rem] font-black tracking-tighter uppercase italic leading-none">
+          <h1
+            className={`${LuckiestGuyRegular.className} text-6xl md:text-8xl lg:text-[5rem] font-black uppercase leading-none `}
+          >
             ARMO
             <span className="text-[#93DCFF]"> STUDIO</span>
           </h1>
-          <p className="mt-4 text-lg md:text-xl text-gray-400 max-w-lg font-mono">
+          <p
+            className={`${BubblegumSansRegular.className} mt-4 text-lg md:text-xl text-gray-400 max-w-lg font-mono`}
+          >
             Develop your next generation immersive experiences and pushing the
             boundaries of interactive entertainment.
           </p>
@@ -56,7 +75,7 @@ export default function Home() {
                 document.getElementById("services-section");
               servicesSection?.scrollIntoView({ behavior: "smooth" });
             }}
-            className="mt-8 px-10 py-4 bg-gradient-to-t from-[#13364C] to-[#387498] text-white text-lg font-bold rounded-full shadow-[0_0_10px_rgba(147,220,255,0.3)] hover:shadow-[0_0_30px_rgba(147,220,255,0.5)] transition-all duration-300"
+            className={`${BubblegumSansRegular.className} mt-50 px-10 py-4 bg-gradient-to-t from-[#13364C] to-[#387498] text-white text-lg font-bold rounded-full shadow-[0_0_10px_rgba(147,220,255,0.3)] hover:shadow-[0_0_30px_rgba(147,220,255,0.5)] transition-all duration-300`}
           >
             Explore Our Work
           </motion.button>

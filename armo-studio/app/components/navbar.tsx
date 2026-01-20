@@ -20,13 +20,13 @@ function NavItem({ label, position, href }: NavItemProps) {
     // Smoothly scale on hover
     mesh.current.scale.lerp(
       new THREE.Vector3(hovered ? 1.2 : 1, hovered ? 1.2 : 1, 1),
-      0.1
+      0.1,
     );
     // Add a slight tilt based on mouse position
     mesh.current.rotation.y = THREE.MathUtils.lerp(
       mesh.current.rotation.y,
       hovered ? 0.2 : 0,
-      0.1
+      0.1,
     );
   });
 
@@ -38,10 +38,12 @@ function NavItem({ label, position, href }: NavItemProps) {
         fontSize={0.3}
         color={hovered ? "#387498" : "white"}
         onPointerOver={() => (
-          (document.body.style.cursor = "pointer"), setHover(true)
+          (document.body.style.cursor = "pointer"),
+          setHover(true)
         )}
         onPointerOut={() => (
-          (document.body.style.cursor = "auto"), setHover(false)
+          (document.body.style.cursor = "auto"),
+          setHover(false)
         )}
         onClick={() => (window.location.href = href)}
         // If you don't have a custom font yet, comment the line below
@@ -88,10 +90,11 @@ export default function Navbar3D() {
         <spotLight position={[-10, 10, 10]} angle={0.15} penumbra={1} />
 
         <ResponsiveCenter>
-          <NavItem label="ARMO" position={[-3, 0, 0]} href="/" />
-          <NavItem label="SERVICES" position={[-1, 0, 0]} href="/services" />
-          <NavItem label="ABOUT US" position={[1, 0, 0]} href="/about" />
-          <NavItem label="CAREERS" position={[3, 0, 0]} href="/careers" />
+          <NavItem label="ABOUT" position={[-4, 0, 0]} href="/about" />
+          <NavItem label="PRODUCTS" position={[-2, 0, 0]} href="/services" />
+          <NavItem label="ARMO" position={[0, 0, 0]} href="/" />
+          <NavItem label="CAREERS" position={[2, 0, 0]} href="/careers" />
+          <NavItem label="CONTACT" position={[4, 0, 0]} href="/contact" />
         </ResponsiveCenter>
 
         {/* This helps visibility by adding a soft floor shadow */}
